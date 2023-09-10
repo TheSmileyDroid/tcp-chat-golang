@@ -1,6 +1,10 @@
 package tcp
 
-import "net"
+import (
+	"bufio"
+	"net"
+	"os"
+)
 
 func StartClient() {
 	tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
@@ -12,18 +16,30 @@ func StartClient() {
 	if err != nil {
 		panic(err)
 	}
+	defer conn.Close()
 
-	_, err = conn.Write([]byte("Hello, world!"))
-	if err != nil {
-		panic(err)
+	go func() {
+		reader := bufio.NewReader(conn)
+
+		for {
+			message, err := reader.ReadString('\n')
+			if err != nil {
+				break
+			}
+
+			os.Stdout.WriteString(message)
+		}
+	}()
+
+	os.Stdout.WriteString("Digite seu usuário: ")
+
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		message, err := reader.ReadString('\n')
+		if err != nil {
+			panic(err)
+		}
+
+		conn.Write([]byte(message))
 	}
-
-	received := make([]byte, 1024)
-	_, err = conn.Read(received)
-	if err != nil {
-		panic(err)
-	}
-
-	println("Received: " + string(received) + "!")
-	conn.Close()
 }
