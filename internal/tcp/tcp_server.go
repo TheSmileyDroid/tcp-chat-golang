@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	"strings"
 )
 
 const (
-	HOST = "127.0.0.1"
 	PORT = "34070"
 	TYPE = "tcp"
 )
@@ -20,6 +20,12 @@ type Client struct {
 }
 
 func StartServer() {
+
+	HOST := os.Getenv("HOST")
+
+	if HOST == "" {
+		HOST = "localhost"
+	}
 
 	clientCount := 0
 

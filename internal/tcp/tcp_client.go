@@ -7,6 +7,12 @@ import (
 )
 
 func StartClient() {
+	HOST := os.Getenv("HOST")
+
+	if HOST == "" {
+		HOST = "localhost"
+	}
+
 	tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
 	if err != nil {
 		panic(err)
