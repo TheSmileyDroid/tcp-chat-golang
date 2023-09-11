@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net"
 )
 
@@ -12,6 +11,14 @@ func main() {
 	}
 
 	for i, inter := range interfaces {
-		log.Printf("%d: %s %s", i, inter.Name, inter.HardwareAddr)
+		addrs, err := inter.Addrs()
+		if err != nil {
+			panic(err)
+		}
+		text := ""
+		for _, addr := range addrs {
+			text += " type: " + addr.Network() + " addr: " + addr.String()
+		}
+		println(i, ":", inter.Name, " ", inter.HardwareAddr.String(), " ", text, "\n")
 	}
 }
