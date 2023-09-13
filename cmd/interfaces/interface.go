@@ -2,6 +2,7 @@ package main
 
 import (
 	"net"
+	"strconv"
 )
 
 func main() {
@@ -19,6 +20,6 @@ func main() {
 		for _, addr := range addrs {
 			text += " type: " + addr.Network() + " addr: " + addr.String()
 		}
-		println(i, ":", inter.Name, " ", inter.HardwareAddr.String(), " ", text, "\n")
+		println(strconv.Itoa(i)+":", inter.Name, inter.HardwareAddr.String(), text, "\n")
 	}
 }
