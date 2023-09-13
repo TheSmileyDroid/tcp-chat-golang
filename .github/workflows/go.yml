@@ -18,12 +18,20 @@ jobs:
         with:
           go-version: 1.21
 
-      - name: Build for Linux
+      - name: Build server for Linux
         run: GOOS=linux GOARCH=amd64 go build -o ./bin/linux/server ./cmd/server
         working-directory: ./
 
-      - name: Build for Windows
+      - name: Build client for Linux
+        run: GOOS=linux GOARCH=amd64 go build -o ./bin/linux/client ./cmd/client
+        working-directory: ./
+
+      - name: Build server for Windows
         run: GOOS=windows GOARCH=amd64 go build -o ./bin/windows/server.exe ./cmd/server
+        working-directory: ./
+
+      - name: Build client for Windows
+        run: GOOS=windows GOARCH=amd64 go build -o ./bin/windows/client.exe ./cmd/client
         working-directory: ./
 
       - name: Upload Artifacts
