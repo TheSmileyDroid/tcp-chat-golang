@@ -32,26 +32,3 @@ jobs:
         with:
           name: build-artifacts
           path: ./bin
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: write-all
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build-artifacts
-          path: ./bin
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            ./bin/linux/server
-            ./bin/windows/server.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
