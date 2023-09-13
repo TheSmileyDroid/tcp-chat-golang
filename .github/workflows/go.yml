@@ -1,9 +1,13 @@
 name: Build and Deploy
 
 on:
+<<<<<<< HEAD
   push:
     tags:
       - v*
+=======
+  workflow_dispatch:
+>>>>>>> origin/main
 
 jobs:
   build:
